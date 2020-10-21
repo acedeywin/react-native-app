@@ -1,6 +1,6 @@
 import React from "react";
-import { view, FlatList } from "react-native";
-import { ListItem, Avatar } from "react-native-elements";
+import { FlatList } from "react-native";
+import { ListItem } from "react-native-elements";
 
 export default function Menu(props) {
   const renderMenuItem = ({ item, index }) => {
@@ -10,6 +10,7 @@ export default function Menu(props) {
         title={item.name}
         subtitle={item.description}
         hideChevron={true}
+        onPress={() => props.onPress(item.id)}
         leftAvatar={{ source: require("./images/uthappizza.png") }}
       />
     );
