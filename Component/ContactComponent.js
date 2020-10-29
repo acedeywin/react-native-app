@@ -6,9 +6,9 @@ export default class Contact extends Component {
   constructor() {
     super();
   }
-  static navigationOptions = {
-    title: "Contact Us",
-  };
+  // static navigationOptions = {
+  //   title: "Contact Us",
+  // };
 
   render() {
     return (

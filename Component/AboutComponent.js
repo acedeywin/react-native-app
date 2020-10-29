@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import { Text, FlatList, View } from "react-native";
 import { Card } from "react-native-elements";
 import { ListItem } from "react-native-elements";
-import { LEADERS } from "../shared/leaders";
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
+
+const mapStateToProps = (state) => {
+  return {
+    leaders: state.leaders,
+  };
+};
 
 const History = () => {
   return (
@@ -27,17 +34,10 @@ const History = () => {
   );
 };
 
-export default class About extends Component {
-  constructor() {
-    super();
-    this.state = {
-      leaders: LEADERS,
-    };
-  }
-
-  static navigationOptions = {
-    title: "About Us",
-  };
+class About extends Component {
+  // static navigationOptions = {
+  //   title: "About Us",
+  // };
 
   render() {
     const renderAboutItem = ({ item, index }) => {
@@ -47,7 +47,7 @@ export default class About extends Component {
           title={item.name}
           subtitle={item.description}
           hideChevron={true}
-          leftAvatar={{ source: require("./images/alberto.png") }}
+          leftAvatar={{ source: { uri: baseUrl + item.image } }}
         />
       );
     };
@@ -59,7 +59,7 @@ export default class About extends Component {
         <View>
           <Card title="Corporate Leadership">
             <FlatList
-              data={this.state.leaders}
+              data={this.props.leaders.leaders}
               renderItem={renderAboutItem}
               keyExtractor={(item) => item.id.toString()}
             />
@@ -69,3 +69,5 @@ export default class About extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(About);

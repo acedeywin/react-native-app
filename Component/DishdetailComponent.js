@@ -1,18 +1,22 @@
 import React from "react";
 import { View, Text, ScrollView, FlatList } from "react-native";
 import { Card, Icon } from "react-native-elements";
-import { DISHES } from "../shared/dishes";
-import { COMMENTS } from "../shared/comments";
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
+
+const mapStateToProps = (state) => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+  };
+};
 
 function RenderDish(props) {
   const dish = props.dish;
 
   if (dish != null) {
     return (
-      <Card
-        featuredTitle={dish.name}
-        image={require("./images/uthappizza.png")}
-      >
+      <Card featuredTitle={dish.name} image={{ uri: baseUrl + dish.image }}>
         <Text style={{ margin: 10 }}>{dish.description}</Text>
         <Icon
           raised
@@ -57,13 +61,11 @@ const RenderComments = (props) => {
   );
 };
 
-export default class Dishdetail extends React.Component {
+class Dishdetail extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      dishes: DISHES,
-      comments: COMMENTS,
       favorites: [],
     };
   }
@@ -72,21 +74,21 @@ export default class Dishdetail extends React.Component {
     this.setState({ favorites: this.state.favorites.concat(dishId) });
   }
 
-  static navigationOptions = {
-    title: "Dish Details",
-  };
+  // static navigationOptions = {
+  //   title: "Dish Details",props.route.params.name
+  // };
 
   render() {
-    const dishId = this.props.navigation.getParam("dishId", "");
+    const dishId = this.props.route.params.dishId;
     return (
       <ScrollView>
         <RenderDish
-          dish={this.state.dishes[+dishId]}
+          dish={this.props.dishes.dishes[+dishId]}
           favorite={this.state.favorites.some((el) => el === dishId)}
           onPress={() => this.markFavorite(dishId)}
         />
         <RenderComments
-          comments={this.state.comments.filter(
+          comments={this.props.comments.comments.filter(
             (comment) => comment.dishId === dishId
           )}
         />
@@ -94,3 +96,5 @@ export default class Dishdetail extends React.Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(Dishdetail);

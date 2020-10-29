@@ -1,6 +1,5 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
-import { comments } from "./comments";
 
 //For comments
 export const fetchComments = () => (dispatch) => {
@@ -99,8 +98,8 @@ export const fetchPromos = () => (dispatch) => {
       }
     )
     .then((response) => response.json())
-    .then((promos) => dispatch(addDishes(promos)))
-    .catch((error) => dispatch(dishesFailed(error.response)));
+    .then((promos) => dispatch(addPromos(promos)))
+    .catch((error) => dispatch(promosFailed(error.response)));
 };
 
 export const promosLoading = () => ({
@@ -112,7 +111,7 @@ export const promosFailed = (errMess) => ({
   payload: errMess,
 });
 
-export const addDishes = (promos) => ({
+export const addPromos = (promos) => ({
   type: ActionTypes.ADD_PROMOS,
   payload: promos,
 });
