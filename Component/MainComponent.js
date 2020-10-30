@@ -12,6 +12,7 @@ import Dishdetail from "./DishdetailComponent";
 import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
 import About from "./AboutComponent";
+import Reservation from "./ReservationComponent";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator, DrawerItems } from "@react-navigation/drawer";
@@ -168,6 +169,38 @@ const AboutNavigator = () => {
   );
 };
 
+const ReservationNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#513da8",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+      }}
+    >
+      <Stack.Screen
+        name="Contact"
+        component={Reservation}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <Icon
+              name="menu"
+              size={24}
+              color="white"
+              iconStyle={{ marginLeft: 10 }}
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const CustomDrawerContentComponent = ({ props }) => {
   return (
     <ScrollView>
@@ -243,7 +276,22 @@ const MainNavigator = () => {
             <Icon
               name="address-card"
               type="font-awesome"
-              size={21}
+              size={22}
+              color={tintColor}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Reserve Table"
+        component={ReservationNavigator}
+        drawerLabel="Reserve Table"
+        options={{
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name="cutlery"
+              type="font-awesome"
+              size={24}
               color={tintColor}
             />
           ),
