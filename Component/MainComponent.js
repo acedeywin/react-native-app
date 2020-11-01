@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Platform,
-  View,
-  Image,
-  StyleSheet,
-  ScrollView,
-  Text,
-} from "react-native";
+import { View, Image, StyleSheet, ScrollView, Text } from "react-native";
 import Menu from "./MenuComponent";
 import Dishdetail from "./DishdetailComponent";
 import Home from "./HomeComponent";
@@ -183,7 +176,7 @@ const ReservationNavigator = () => {
       }}
     >
       <Stack.Screen
-        name="Contact"
+        name="Reservation"
         component={Reservation}
         options={({ navigation }) => ({
           headerLeft: () => (
