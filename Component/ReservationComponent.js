@@ -22,9 +22,6 @@ class Reservation extends Component {
       date: "",
       showModal: false,
     };
-    // this.handleReservation = this.handleReservation.bind(this);
-    // this.toggleModal = this.toggleModal.bind(this);
-    // this.resetForm = this.resetForm.bind(this);
   }
 
   toggleModal() {
@@ -150,7 +147,7 @@ class Reservation extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   formRow: {
     alignItems: "center",
     justifyContent: "center",
