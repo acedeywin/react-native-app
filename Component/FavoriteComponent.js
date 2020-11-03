@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, View, Button } from "react-native";
 import { ListItem } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
+import { deleteFavorite } from "../redux/ActionCreators";
 
 const mapStateToProps = (state) => {
   return {
@@ -12,20 +13,39 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteFavorite: (dishId) => dispatch(deleteFavorite(dishId)),
+});
+
 class Favorites extends Component {
   render() {
     const { navigate } = this.props.navigation;
 
     const renderMenuItem = ({ item, index }) => {
+      //   const rightButton = [
+      //     {
+      //       text: "Delete",
+      //       type: "delete",
+      //       onPress: () => this.props.deleteFavorite(item.id),
+      //     },
+      //   ];
+
       return (
-        <ListItem
-          key={index}
-          title={item.name}
-          subtitle={item.description}
-          hideChevron={true}
-          onPress={() => navigate("Dishdetail", { dishId: item.id })}
-          leftAvatar={{ source: { uri: baseUrl + item.image } }}
-        />
+        <View>
+          <ListItem
+            key={index}
+            title={item.name}
+            subtitle={item.description}
+            hideChevron={true}
+            onPress={() => navigate("Dishdetail", { dishId: item.id })}
+            leftAvatar={{ source: { uri: baseUrl + item.image } }}
+          />
+          <Button
+            title="Delete"
+            color="#512da8"
+            onPress={() => this.props.deleteFavorite(item.id)}
+          />
+        </View>
       );
     };
     if (this.props.dishes.isLoading) {
@@ -50,4 +70,4 @@ class Favorites extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Favorites);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
