@@ -6,6 +6,7 @@ import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
 import About from "./AboutComponent";
 import Reservation from "./ReservationComponent";
+import Favorites from "./FavoriteComponent";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator, DrawerItems } from "@react-navigation/drawer";
@@ -194,6 +195,38 @@ const ReservationNavigator = () => {
   );
 };
 
+const FavoritesNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#513da8",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+      }}
+    >
+      <Stack.Screen
+        name="Favorites"
+        component={Favorites}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <Icon
+              name="menu"
+              size={24}
+              color="white"
+              iconStyle={{ marginLeft: 10 }}
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const CustomDrawerContentComponent = ({ props }) => {
   return (
     <ScrollView>
@@ -270,6 +303,21 @@ const MainNavigator = () => {
               name="address-card"
               type="font-awesome"
               size={22}
+              color={tintColor}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="My Favorites"
+        component={FavoritesNavigator}
+        drawerLabel="My Favorites"
+        options={{
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name="heart"
+              type="font-awesome"
+              size={24}
               color={tintColor}
             />
           ),
