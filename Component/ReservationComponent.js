@@ -13,6 +13,9 @@ import { Picker } from "@react-native-community/picker";
 import { Card } from "react-native-elements";
 import DatePicker from "react-native-datepicker";
 import * as Animatable from "react-native-animatable";
+import { Notifications } from "expo";
+import * as Permissions from "expo-permissions";
+import { color } from "react-native-reanimated";
 
 class Reservation extends Component {
   constructor() {
@@ -45,7 +48,10 @@ class Reservation extends Component {
         },
         {
           text: "OK",
-          onPress: () => this.resetForm(),
+          onPress: () => {
+            this.presentLocalNotification(this.state.date);
+            this.resetForm();
+          },
         },
       ],
       { cancelable: false }
@@ -57,6 +63,38 @@ class Reservation extends Component {
       guests: 1,
       smoking: false,
       date: "",
+    });
+  }
+
+  async obtainNotificationPermission() {
+    let permission = await Permissions.getAsync(
+      Permissions.USER_FACING_NOTIFICATIONS
+    );
+    if (permission.status !== "granted") {
+      permission = await Permissions.askAsync(
+        Permissions.USER_FACING_NOTIFICATIONS
+      );
+      if (permission.status !== "granted") {
+        Alert.alert("Permission not granted to show notification");
+      }
+    }
+    return permission;
+  }
+
+  async presentLocalNotification() {
+    await this.obtainNotificationPermission();
+    Notifications.presentLocalNotificationAsync({
+      title: "Your Reservation",
+      body: "Reservation for " + dat + " requested",
+      ios: {
+        sound: true,
+      },
+      android: {
+        name: "Confusion",
+        sound: true,
+        vibrate: true,
+        color: "#512da8",
+      },
     });
   }
 
@@ -123,7 +161,7 @@ class Reservation extends Component {
               onPress={() => this.handleReservation()}
               title="Reserve"
               color="#512DA8"
-              title="Close"
+              title="Reserve"
               accessibilityLabel="Learn more about this purple button"
             />
           </View>
