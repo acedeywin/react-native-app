@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, ScrollView, Image } from "react-native";
 import { Input, Icon, CheckBox, Button } from "react-native-elements";
 import * as SecureStore from "expo-secure-store";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
 import { baseUrl } from "../shared/baseUrl";
 import { styles } from "./ReservationComponent";
 
@@ -85,7 +85,7 @@ class LoginTab extends Component {
             onPress={() => this.props.navigation.navigate("Register")}
             title="Register"
             clear
-            color="blue"
+            color="white"
             titleStyle={{ color: "blue" }}
           />
         </View>
@@ -105,7 +105,7 @@ class RegisterTab extends Component {
       lastname: "",
       email: "",
       remember: false,
-      imageUrl: `${baseUrl} /images/logo.png`,
+      imageUrl: baseUrl + "images/logo.png",
     };
   }
 
@@ -125,9 +125,18 @@ class RegisterTab extends Component {
       });
 
       if (!capturedImage.cancelled) {
-        this.setState({ imageUrl: capturedImage.uri });
+        this.processedImage(capturedImage.uri);
       }
     }
+  };
+
+  processImage = async (imageUri) => {
+    let processedImage = await ImageManipulator.manipulateAsync(
+      imageUri,
+      [{ resize: { width: 400 } }],
+      { format: "png" }
+    );
+    this.setState({ imageUri: processedImage.uri });
   };
 
   handleRegister() {
