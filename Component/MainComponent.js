@@ -290,7 +290,7 @@ const MainNavigator = () => {
     <Drawer.Navigator
       drawerStyle={{ backgroundColor: "#d1c4e9" }}
       // drawerContent={() => <CustomDrawerContentComponent />}
-      initialRouteName="Home"
+      // initialRouteName="Home"
     >
       <Drawer.Screen
         name="Login"

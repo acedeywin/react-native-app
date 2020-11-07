@@ -221,14 +221,22 @@ export const styles = StyleSheet.create({
     margin: 20,
   },
   formInput: {
-    margin: 40,
+    margin: 20,
   },
   formCheckbox: {
-    margin: 40,
+    margin: 20,
     backgroundColor: null,
   },
   formButton: {
     margin: 60,
+  },
+  imageContainer: {
+    flex: 1,
+    flexDirection: "row",
+    margin: 20,
+  },
+  image: {
+    margin: 40,
   },
 });
 
